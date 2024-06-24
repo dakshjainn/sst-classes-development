@@ -1,0 +1,14 @@
+.product-card{
+    border: solid;
+    border-color: red;
+    margin: 5px;
+}
+.show{
+    display: block;
+}
+.hide{
+    display: none;
+}
+input{
+    border: none;
+}
