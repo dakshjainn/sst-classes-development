@@ -1,15 +1,21 @@
-import { useContext } from "react";
-import CartContext from "../../context/CartContext";
-function AddToCart({ product }) {
-    console.log("add to cart", product.id)
-    const { cart, increaseQuantity, decreaseQuantity } = useContext(CartContext);
+import { useSelector, useDispatch } from "react-redux";
+function ReduxAddToCart({ product }) {
+    console.log("add to cart", product.id);
+    // useSelector
+    let dispatch = useDispatch();
     function increase() {
-        increaseQuantity(product);
+        //dispatch({type: , payload: })
+        dispatch({ type: "ADD_TO_CART", payload: product });
     }
     function decrease() {
-        decreaseQuantity(product);
+     //dispatch({type: , payload: })
+     dispatch({ type: "REMOVE_FROM_CART", payload: product });
     }
-    const quantity = cart[product.id] ? cart[product.id].quantity : 0;
+
+    let quantity = useSelector((state) => {
+        return state.items[product.id]?.quantity || 0;
+    })
+
     if (quantity === 0) {
         return (
             <div>
@@ -22,14 +28,11 @@ function AddToCart({ product }) {
                 <button onClick={decrease}>-</button>
                 <span>{quantity}</span>
                 <button onClick={increase}>+</button>
-
             </div>
         )
     }
-
 }
-
-export default AddToCart;
+export default ReduxAddToCart;
 
 
 // array of object 
@@ -42,8 +45,3 @@ export default AddToCart;
 
 // Object.value(obj);
 // Object.keys(obj);
-
-// const cart = {"1":{id:1, name:"apple", price:10}, "2":{id:2, name:"banana", price:20}, "3":{id:3, name:"orange", price:30}, "4":{id:4, name:"grapes", price:40}, "5":{id:5, name:"mango", price:50}};
-
-// console.log(Object.keys(cart));
-// console.log(Object.values(cart));
